@@ -25,12 +25,12 @@ The TypeHustle is an interactive web application designed to measure your typing
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/typing-speed-test.git
+    git clone https://github.com/megh-bari/TypeHustle.git
     ```
 
 2. Navigate to the project directory:
     ```bash
-    cd typing-speed-test
+    cd TypeHustle
     ```
 
 3. Open `index.html` in your browser to start using the application.
