@@ -4,7 +4,7 @@
 
 The TypeHustle is an interactive web application designed to measure your typing speed and accuracy. Challenge yourself with different difficulty levels, track your performance with real-time feedback, and improve your typing skills.
 
-## Visit: [TypeHustle]()
+## Visit: [TypeHustle](https://type-hustle.vercel.app/)
 
 ## Features
 
