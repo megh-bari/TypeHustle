@@ -254,7 +254,9 @@ nav ul li.selected {
         padding: 8px 12px;
         font-size: 0.8rem;
     }
-
+    .char.current::after {
+        right: 8px; 
+    }
     #words-display {
         font-size: 0.9rem;
         height: 100px;

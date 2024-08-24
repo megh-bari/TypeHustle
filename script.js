@@ -50,11 +50,16 @@ let correctChars = 0;
 let totalChars = 0;
 let isTimerStarted = false;
 
+function focusHiddenInput() {
+    document.getElementById('hidden-input').focus();
+}
+
 function init() {
   shuffleWords(words); 
   displayWords();
   resetGame();
   updateSelectionDisplay();
+  focusHiddenInput();
 }
 
 function resetGame() {
@@ -71,6 +76,10 @@ function resetGame() {
   updateCursor();
 }
 
+
+document.addEventListener('DOMContentLoaded', focusHiddenInput);
+
+wordsDisplay.addEventListener('click', focusHiddenInput);
 
 function shuffleWords(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -108,6 +117,8 @@ function handleTyping(e) {
 
   updateCursor();
   e.preventDefault();
+  
+  focusHiddenInput();
 }
 
 
