@@ -72,7 +72,10 @@ nav ul li.selected {
     font-size: 2rem;
     margin-bottom: 20px;
 }
-
+#words-display {
+    user-select: none;
+    cursor: default;
+}
 #words-display {
     background-color: #2c2e31;
     padding: 20px;

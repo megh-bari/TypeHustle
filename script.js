@@ -206,13 +206,40 @@ function resetGame() {
 }
 
 function enableMobileTyping() {
-  wordsDisplay.setAttribute("contenteditable", "true");
-  wordsDisplay.setAttribute("autocomplete", "off");
-  wordsDisplay.setAttribute("autocorrect", "off");
-  wordsDisplay.setAttribute("autocapitalize", "off");
-  wordsDisplay.setAttribute("spellcheck", "false");
-  wordsDisplay.style.caretColor = "transparent";
+    wordsDisplay.setAttribute("contenteditable", "true");
+    wordsDisplay.setAttribute("inputmode", "none");
+    wordsDisplay.setAttribute("autocomplete", "off");
+    wordsDisplay.setAttribute("autocorrect", "off");
+    wordsDisplay.setAttribute("autocapitalize", "off");
+    wordsDisplay.setAttribute("spellcheck", "false");
+    wordsDisplay.style.caretColor = "transparent";
+    wordsDisplay.style.outline = "none";
+    wordsDisplay.style.userSelect = "none";
 }
+let touchStartX = 0;
+let touchStartY = 0;
+
+wordsDisplay.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+});
+
+wordsDisplay.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) {
+        // It's a tap, not a swipe
+        if (!isTimerStarted) {
+            startTimer();
+            isTimerStarted = true;
+        }
+        wordsDisplay.focus();
+    }
+});
+
 document.addEventListener('DOMContentLoaded', enableMobileTyping);
 
 
@@ -239,29 +266,28 @@ function displayWords() {
 }
 
 function handleTyping(e) {
-  if (!isTimerStarted && e.key.length === 1) {
-    startTimer();
-    isTimerStarted = true;
-  }
+    let key = e.key || e.data;
 
-  const currentWord = words[currentWordIndex];
-  const currentChar = currentWord[currentCharIndex];
-  if (e.key !== "Tab") {
+    if (!isTimerStarted && key && key.length === 1) {
+        startTimer();
+        isTimerStarted = true;
+    }
+
+    const currentWord = words[currentWordIndex];
+    const currentChar = currentWord[currentCharIndex];
+
+    if (key === "Backspace") {
+        handleBackspace();
+    } else if (key === currentChar) {
+        handleCorrectChar();
+    } else if (key === " " && currentCharIndex === currentWord.length) {
+        handleWordComplete();
+    } else if (key && key.length === 1) {
+        handleIncorrectChar();
+    }
+
+    updateCursor();
     e.preventDefault();
-  }
-  if (e.key === "Backspace") {
-    handleBackspace();
-  } else if (e.key === currentChar) {
-    handleCorrectChar();
-  } else if (e.key === " " && currentCharIndex === currentWord.length) {
-    handleWordComplete();
-  } else if (e.key.length === 1) {
-    handleIncorrectChar();
-  }
-
-  updateCursor();
-  e.preventDefault();
-
 }
 
 function handleBackspace() {
@@ -438,3 +464,4 @@ closeResultBtn.addEventListener("click", () => {
 document.addEventListener("keydown", handleTyping);
 
 init();
+
