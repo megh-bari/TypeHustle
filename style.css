@@ -258,10 +258,13 @@ nav ul li.selected {
         right: 8px; 
     }
     #words-display {
-        font-size: 0.9rem;
-        height: 100px;
+        outline: none;
+        caret-color: transparent;
     }
-
+    
+    #words-display br {
+        display: none;
+    }
     #timer {
         font-size: 1.2rem;
     }
